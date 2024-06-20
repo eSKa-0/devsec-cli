@@ -16,17 +16,17 @@ def w1nd0w():
     banner.banner2()
     b4nn3r = ch4ng3b4nn3r()
     c0l0r = ch4ng3c0l0r()
-    w = open("C:\\Users\\Milo\\Proton Drive\\Flavinito\\My files\\Projects\\devsec cli\\s3tt1ngs.txt", "w")
+    w = open(f"s3tt1ngs.txt", "w")
     w.write(f"b4nn3r:{b4nn3r}\nc0l0r:{c0l0r}")
     w.close()
 
-def g3ts3tt1ng():
+def g3ts3tt1ng(r00td1r):
     settinglist = []
-    r = open("C:\\Users\\Milo\\Proton Drive\\Flavinito\\My files\\Projects\\devsec cli\\s3tt1ngs.txt", "r")
+    r = open(f"{r00td1r}\\s3tt1ngs.txt", "r")
     for setting in r.read().split():
         setting = setting.split(":")
         settinglist.append(setting[1])
     return settinglist
 
 def op3n():
-    os.startfile("C:\\Users\\Milo\\Proton Drive\\Flavinito\\My files\\Projects\\devsec cli\\settingswindow.py")
+    os.startfile(f"settingswindow.py")
