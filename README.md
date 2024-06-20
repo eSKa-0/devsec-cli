@@ -1,1 +1,1 @@
-"# devsec command line interpreter" 
+# devsec command line interpreter
