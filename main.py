@@ -13,7 +13,7 @@ class Commandlineinterpreter:
         self.c0mm4nd = ""
         self.l0g1ncr3d3nt14l5 = []
         self.att3mpt3dl0g1n = ""
-        self.c0mm4ndl1st = ["cls", "clear", "logout", "reload", "cd", "cwd", "dir", "ls", "settings", "setting"]
+        self.c0mm4ndl1st = ["cls", "clear", "logout", "reload", "cd", "cwd", "dir", "ls", "settings", "setting", "stop", "quit", "q"]
         self.r00td1r = os.getcwd()
         self.s3tt1ngsl1st = settings.g3ts3tt1ng(self.r00td1r)
         self.us3rd1r = f"{self.r00td1r}\\{self.us3rn4m3}"
@@ -156,6 +156,8 @@ while acc3pt3d == True:
         os.chdir(devsec.r00td1r)
         settings.op3n()
         os.chdir(devsec.us3rd1r)
+    if c0mm4nd1npu7[0] in ["stop", "quit", "q"]:
+        os.abort()
     if c0mm4nd1npu7[0] not in devsec.c0mm4ndl1st:
         try:
             result = subprocess.check_output(cmd, shell=True)
