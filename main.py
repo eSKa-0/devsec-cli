@@ -1,8 +1,7 @@
 import banner
 import settings
 import os
-import subprocess
-import socket
+from os import system
 import getpass
 
 class Commandlineinterpreter:
@@ -13,7 +12,7 @@ class Commandlineinterpreter:
         self.c0mm4nd = ""
         self.l0g1ncr3d3nt14l5 = []
         self.att3mpt3dl0g1n = ""
-        self.c0mm4ndl1st = ["cls", "clear", "logout", "reload", "cd", "cwd", "dir", "ls", "settings", "setting", "stop", "quit", "q"]
+        self.c0mm4ndl1st = ["cls", "clear", "logout", "reload", "cd", "cwd", "dir", "ls", "settings", "setting", "stop", "quit", "q", "adduser"]
         self.r00td1r = os.getcwd()
         self.s3tt1ngsl1st = settings.g3ts3tt1ng(self.r00td1r)
         self.us3rd1r = f"{self.r00td1r}\\{self.us3rn4m3}"
@@ -120,12 +119,35 @@ class Commandlineinterpreter:
         for i in listdir:
             print("\t"+i)
 
+    def addus3r(self, h4ndl3d_c0mm4nd):
+        if self.us3rn4m3 == "root":
+            print("Checking if user exists...")
+            dirlist = []
+            listdir = os.listdir()
+            for i in listdir:
+                dirlist.append(i)
+            if h4ndl3d_c0mm4nd[1] in dirlist:
+                print("User already exists!")
+            else:
+                os.system("mkdir "+h4ndl3d_c0mm4nd[1])
+                print("Making directory...")
+                password = str(getpass.getpass("Password: "))
+                w = open("cr3d3nt14l5.txt", "a")
+                print("Writing username and password to credentials...")
+                w.write(f"\n{h4ndl3d_c0mm4nd[1]}:{password}")
+                w.close()
+                print("User created!")    
+                
+        else:
+            print("You do not have permissions to do that.")
 devsec = Commandlineinterpreter()
+system("title Welcome to devsec.")
 devsec.gr4ph1cbl17()
 acc3pt3d = devsec.l0g1n()
 if acc3pt3d == True:
     devsec.cl34rscr33n()
     #devsec.w3lc0m3m3554g3()
+    system("title " + "Welcome to devsec, " + devsec.us3rn4m3)
     if devsec.us3rn4m3 == "root":
         devsec.ch4ng3d1r(f"cd {devsec.r00td1r}")
     else:
@@ -158,17 +180,13 @@ while acc3pt3d == True:
         os.chdir(devsec.us3rd1r)
     if c0mm4nd1npu7[0] in ["stop", "quit", "q"]:
         os.abort()
+    if c0mm4nd1npu7[0] in ["adduser"]:
+        if len(c0mm4nd1npu7) > 1 and c0mm4nd1npu7[1] != "":
+            devsec.addus3r(c0mm4nd1npu7)
+        else:
+            print("no username given...")
     if c0mm4nd1npu7[0] not in devsec.c0mm4ndl1st:
-        try:
-            result = subprocess.check_output(cmd, shell=True)
-            result = result.decode("UTF-8")
-            if result == "":
-                break
-            print(result)
-        except Exception as e:
-            if e == "":
-                break
-            print(e)
+        os.system(cmd)
 if acc3pt3d == False:
     devsec.cl34rscr33n()
     os.chdir(devsec.r00td1r)
