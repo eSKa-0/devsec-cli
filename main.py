@@ -3,6 +3,8 @@ import settings
 import os
 from os import system
 import getpass
+import socket
+from tcpchatOk import Tcpchat
 
 class Commandlineinterpreter:
     def __init__(self) -> None:
@@ -12,10 +14,13 @@ class Commandlineinterpreter:
         self.c0mm4nd = ""
         self.l0g1ncr3d3nt14l5 = []
         self.att3mpt3dl0g1n = ""
-        self.c0mm4ndl1st = ["cls", "clear", "logout", "reload", "cd", "cwd", "dir", "ls", "settings", "setting", "stop", "quit", "q", "adduser"]
+        self.c0mm4ndl1st = ["cls", "clear", "logout", "reload", "cd", "cwd", "dir", "ls", "settings", "setting", "stop", "quit", "q", "adduser", "tcp", "Tcpchat", "devsecbuster", "buster"]
         self.r00td1r = os.getcwd()
         self.s3tt1ngsl1st = settings.g3ts3tt1ng(self.r00td1r)
         self.us3rd1r = f"{self.r00td1r}\\{self.us3rn4m3}"
+
+    def dirbuster(self):
+        os.startfile("tools\\devsecbuster.py")
 
     def gr4ph1cbl17(self) -> None:
         self.s3tt1ngsl1st = settings.g3ts3tt1ng(self.r00td1r)
@@ -42,6 +47,11 @@ class Commandlineinterpreter:
         if self.s3tt1ngsl1st[0] not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]:
             banner.banner3()
 
+    def tcplisten(self, port, dsthost, dstport):
+        w = open(f"{self.us3rd1r}\\tcp.txt", "w")
+        w.write(f"{port}\n{dsthost}\n{dstport}")
+        os.startfile(f"{self.r00td1r}\\tcprun.py")
+
     def l0g1n(self) -> bool:
         self.us3rn4m3 = str(input("username: "))
         self.p455w0rd = getpass.getpass("password: ")
@@ -62,7 +72,11 @@ class Commandlineinterpreter:
             self.c0mm4nd = str(input(f"{self.us3rn4m3}@devsec [{m0dcwd}] > "))
         else:
             m0dcwd = cwd.replace(self.us3rd1r, "⁛")
-            self.c0mm4nd = str(input(f"{self.us3rn4m3}@devsec [{m0dcwd}] > "))
+            if self.us3rn4m3 == "sil":
+                self.c0mm4nd = str(input(f"{self.us3rn4m3}@ballsec [{m0dcwd}] > "))
+            else:
+                self.c0mm4nd = str(input(f"{self.us3rn4m3}@devsec [{m0dcwd}] > "))
+            
         return self.c0mm4nd
     
     def cl34rscr33n(self) -> None:
@@ -141,7 +155,7 @@ class Commandlineinterpreter:
         else:
             print("You do not have permissions to do that.")
 devsec = Commandlineinterpreter()
-system("title Welcome to devsec.")
+system("title " + "Welcome to devsec.")
 devsec.gr4ph1cbl17()
 acc3pt3d = devsec.l0g1n()
 if acc3pt3d == True:
@@ -159,6 +173,8 @@ while acc3pt3d == True:
     if c0mm4nd1npu7[0] in ["cls", "clear"]:
         devsec.cl34rscr33n()
         #devsec.w3lc0m3m3554g3()
+    if c0mm4nd1npu7[0] in ["devsecbuster", "buster"]:
+        devsec.dirbuster()
     if c0mm4nd1npu7[0] in ["logout"]:
         acc3pt3d = False
     if c0mm4nd1npu7[0] in ["reload"]:
@@ -180,6 +196,17 @@ while acc3pt3d == True:
         os.chdir(devsec.us3rd1r)
     if c0mm4nd1npu7[0] in ["stop", "quit", "q"]:
         os.abort()
+    
+    if c0mm4nd1npu7[0] in ["tcp", "Tcpchat"]:
+        try:
+            if c0mm4nd1npu7[1] == "-l":
+                devsec.tcplisten(int(c0mm4nd1npu7[2]), c0mm4nd1npu7[3], c0mm4nd1npu7[4])
+            if c0mm4nd1npu7[1] == "-m":
+                Tcpchat.sendchat(self=Tcpchat)
+        except Exception as e:
+            print(f"Tcpchat usage\n\t-l [port:int]\tlisten on port\n\t-c [host:str] [port:int] connect on host:port")
+            print(e)
+
     if c0mm4nd1npu7[0] in ["adduser"]:
         if len(c0mm4nd1npu7) > 1 and c0mm4nd1npu7[1] != "":
             devsec.addus3r(c0mm4nd1npu7)
